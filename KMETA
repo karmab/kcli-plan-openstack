@@ -1,0 +1,36 @@
+- name: openstack_upstream
+  file: upstream.yml
+  description: Upstream packstack
+  numvms: 1
+  comments: Version can be set to queens,pike,ocata,newton,liberty
+
+- name: openstack_downstream
+  file: downstream.yml
+  description: Downstream packstack
+  numvms: 1
+  comments: Version can be set to queen,pike,ocata,newton,liberty, kilo
+
+- name: openstack_advanced
+  file: advanced.yml
+  description: Downstream packstack with one controller and arbitrary compute nodes (2 by default)
+  numvms: 3
+  
+- name: tripleo
+  file: tripleo/tripleo.yml
+  description: Downstream tripleo (1undercloud+1controllers+1compute)
+  numvms: 3
+
+- name: tripleo_advanced
+  file: tripleo/advanced.yml
+  description: Downstream tripleo (1undercloud+3controllers+1compute)
+  numvms: 5
+
+- name: tripleo_advancedceph
+  file: tripleo/advancedceph.yml
+  description: Downstream tripleo (1undercloud+3controllers+1compute+3ceph)
+  numvms: 8
+
+- name: tripleo_advanced12
+  file: tripleo/tripleo-advancedosp12-containers.yml
+  description: Downstream tripleo using containers (1undercloud+3controllers+2compute+3ceph+2Telemetry)
+  numvms: 11
