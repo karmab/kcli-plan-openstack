@@ -32,7 +32,7 @@ parameters:
  external_floating: 192.168.122.202
 
 {{ version }}:
- image: centos8
+ image: centos8stream
  memory: {{ memory }}
  numcpus: {{ numcpus }}
  disks: 
