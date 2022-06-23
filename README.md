@@ -1,4 +1,10 @@
-A plan o deploy openstack using packstack
+A plan to deploy openstack using packstack on a dedicated vm
+
+## How to run
+
+```
+kcli create plan
+```
 
 ## Parameters
 
@@ -6,6 +12,7 @@ A plan o deploy openstack using packstack
 |-----------------|-------------------------------------------------------------------|
 |admin_password   |unix1234                                                           |
 |aodh             |False                                                              |
+|cluster          |testk                                                              |
 |ceilometer       |False                                                              |
 |cirros_image     |http://download.cirros-cloud.net/0.5.2/cirros-0.5.2-x86_64-disk.img|
 |disk_size        |90                                                                 |
@@ -33,5 +40,5 @@ A plan o deploy openstack using packstack
 |swift            |False                                                              |
 |trove            |False                                                              |
 |user             |testk                                                              |
-|version          |victoria                                                           |
+|version          |yoga                                                               |
 |virt_type        |kvm                                                                |

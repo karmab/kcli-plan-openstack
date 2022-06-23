@@ -1,6 +1,6 @@
 cluster: testk
 image: centos8stream
-version: victoria
+version: yoga
 network: default
 sslip: true
 pool: default
