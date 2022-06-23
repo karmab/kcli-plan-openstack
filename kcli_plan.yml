@@ -1,1 +1,13 @@
-upstream.yml
+{{ cluster }}-openstack-{{ version }}:
+ image: {{ image }}
+ memory: {{ memory }}
+ numcpus: {{ numcpus }}
+ disks: 
+  - size: {{ disk_size }}
+ nets:
+ - {{ network }}
+ pool: {{ pool }}
+ files:
+ - scripts
+ scripts: 
+ - scripts/deploy.sh
