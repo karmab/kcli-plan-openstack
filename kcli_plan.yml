@@ -3,7 +3,8 @@
  memory: {{ memory }}
  numcpus: {{ numcpus }}
  disks: 
-  - size: {{ disk_size }}
+  - {{ base_disk_size }}
+  - {{ cinder_disk_size }}
  nets:
  - {{ network }}
  pool: {{ pool }}

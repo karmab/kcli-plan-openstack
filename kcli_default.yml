@@ -6,7 +6,8 @@ sslip: true
 pool: default
 numcpus: 4
 memory: 16384
-disk_size: 90
+base_disk_size: 80
+cinder_disk_size: 100
 user: testk
 password: testk
 project: testk

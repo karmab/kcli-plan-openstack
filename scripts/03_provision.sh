@@ -11,7 +11,8 @@ sed -i "s/OS_TENANT_NAME=admin/OS_TENANT_NAME={{ project }}/" ~/keystonerc_{{ us
 sed -i "s/OS_PROJECT_NAME=admin/OS_PROJECT_NAME={{ project }}/" ~/keystonerc_{{ user }}
 sed -i "s/keystone_admin/keystone_{{ user }}/" ~/keystonerc_{{ user }}
 source ~/keystonerc_admin
-nova flavor-list | grep -q m1.tiny || nova flavor-create --is-public true m1.tiny auto 256 0 1 || openstack flavor create --public m1.tiny --id auto --ram 256 --disk 0 --vcpus 1 --rxtx-factor 1
+openstack flavor list | grep -q m1.tiny || openstack flavor create --public m1.tiny --id auto --ram 256 --disk 0 --vcpus 1 --rxtx-factor 1
+openstack flavor create --id 6 --ram 32768 --vcpus 16 --disk 30 m1.openshift
 openstack project create {{ project }}
 openstack user create  --project {{ project }} --password {{ password }} {{ user }}
 openstack role add --user={{ user }} --project={{ project }} admin
@@ -26,8 +27,8 @@ curl -L {{ cirros_image }} > /tmp/c.img
 glance image-create --name "cirros" --disk-format qcow2 --container-format bare --file /tmp/c.img
 tail -1 /root/.ssh/authorized_keys > ~/{{ user }}.pub
 nova keypair-add --pub-key ~/{{ user }}.pub {{ user }}
-neutron net-create private --
-neutron subnet-create --name 11.0.0.0/24 --allocation-pool start=11.0.0.2,end=11.0.0.254 --gateway 11.0.0.1 --dns-nameserver {{ dns }} private 11.0.0.0/24 
+neutron net-create default --
+neutron subnet-create --name 11.0.0.0/24 --allocation-pool start=11.0.0.2,end=11.0.0.254 --gateway 11.0.0.1 --dns-nameserver {{ dns }} default 11.0.0.0/24 
 neutron router-create router
 neutron router-gateway-set router extnet
 neutron router-interface-add router 11.0.0.0/24
@@ -35,8 +36,8 @@ seq 5 | xargs -I -- neutron floatingip-create extnet
 neutron security-group-create {{ user }}
 neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 22 --port_range_max 22 --remote-ip-prefix 0.0.0.0/0 {{ user }}
 neutron security-group-rule-create --protocol icmp --direction ingress  --remote-ip-prefix 0.0.0.0/0 {{ user }}
-nova boot --flavor m1.tiny --security-groups testk --key-name testk --image cirros --nic net-id=`neutron net-show private -c id -f value` {{ user }}
+nova boot --flavor m1.tiny --security-groups testk --key-name testk --image cirros --nic net-id=`neutron net-show default -c id -f value` {{ user }}
 sleep 8
-ip=$(neutron  floatingip-list -f value -c floating_ip_address  | head -1) ; nova floating-ip-associate {{ user }} ${ip} || openstack server add floating ip {{ user }} ${ip}
+ip=$(neutron floatingip-list -f value -c floating_ip_address | head -1) ; openstack server add floating ip {{ user }} ${ip}
 projectid=$(openstack project show {{ project }} -f value -c id)
-openstack quota set --instances -1 --cores -1 --ram -1 $projectid
+openstack quota set --instances -1 --cores -1 --ram -1 --volumes -1 $projectid
