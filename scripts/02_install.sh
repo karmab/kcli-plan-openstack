@@ -41,6 +41,6 @@ sed -i "s/CONFIG_MAGNUM_INSTALL=n/CONFIG_MAGNUM_INSTALL=y/" /root/answers.txt
 sed -i "s/CONFIG_NOVA_LIBVIRT_VIRT_TYPE=.*/CONFIG_NOVA_LIBVIRT_VIRT_TYPE={{ virt_type }}/" /root/answers.txt
 sed -i "s/CONFIG_CINDER_VOLUMES_CREATE=.*/CONFIG_CINDER_VOLUMES_CREATE=n/" /root/answers.txt
 sed -i "s/CONFIG_CINDER_VOLUMES_SIZE=.*/CONFIG_CINDER_VOLUMES_SIZE={{ cinder_disk_size }}/" /root/answers.txt
-sed -i 's/if not match/if False/' /usr/lib/python3.6/site-packages/packstack/plugins/cinder_250.py
-sed -i "s/match.group('size')/{{ cinder_disk_size }}/" /usr/lib/python3.6/site-packages/packstack/plugins/cinder_250.py
+sed -i 's/if not match/if False/' /usr/lib/python3.*/site-packages/packstack/plugins/cinder_250.py
+sed -i "s/match.group('size')/{{ cinder_disk_size }}/" /usr/lib/python3.*/site-packages/packstack/plugins/cinder_250.py
 HOME=/root packstack --answer-file=/root/answers.txt
