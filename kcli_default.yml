@@ -8,8 +8,8 @@ numcpus: 4
 memory: 16384
 base_disk_size: 80
 cinder_disk_size: 100
-user: testk
-password: testk
+openstack_user: testk
+openstack_password: testk
 project: testk
 admin_password: unix1234
 ovn: true
